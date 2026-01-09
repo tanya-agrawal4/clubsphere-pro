@@ -71,9 +71,9 @@ const AdminPanel: React.FC = () => {
           <div>
             <div className="inline-flex items-center space-x-2 bg-rose-500/10 border border-rose-500/20 rounded-full px-4 py-1.5 mb-6">
               <span className="flex h-2 w-2 rounded-full bg-rose-400"></span>
-              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-rose-400">Authority Panel</span>
+              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-rose-400">Authority Terminal</span>
             </div>
-            <h2 className="text-6xl font-black text-white tracking-tighter leading-tight">Admin Terminal</h2>
+            <h2 className="text-6xl font-black text-white tracking-tighter leading-tight">Club Controls</h2>
           </div>
           
           <div className="flex bg-slate-900/50 p-1.5 rounded-2xl border border-white/5 shadow-inner">
@@ -101,7 +101,7 @@ const AdminPanel: React.FC = () => {
                   <thead className="border-b border-slate-800/60 bg-slate-950/40">
                     <tr>
                       <th className="px-8 py-6 text-[10px] font-black uppercase tracking-widest text-slate-500">Club Entity</th>
-                      <th className="px-8 py-6 text-[10px] font-black uppercase tracking-widest text-slate-500">Notice/PDF</th>
+                      <th className="px-8 py-6 text-[10px] font-black uppercase tracking-widest text-slate-500">Broadcast Notice</th>
                       <th className="px-8 py-6 text-[10px] font-black uppercase tracking-widest text-slate-500 text-right">Access Flow</th>
                     </tr>
                   </thead>
@@ -112,7 +112,7 @@ const AdminPanel: React.FC = () => {
                         <tr key={club.id} className="group hover:bg-white/[0.02] transition-colors">
                           <td className="px-8 py-6">
                             <div className="flex items-center space-x-4">
-                              <div className="w-10 h-10 bg-white/5 p-2 rounded-lg border border-white/5 group-hover:border-white/20">
+                              <div className="w-10 h-10 bg-white/5 p-2 rounded-lg border border-white/5 group-hover:border-white/20 transition-all">
                                 <img src={club.image} className="w-full h-full object-contain" />
                               </div>
                               <div>
@@ -129,10 +129,10 @@ const AdminPanel: React.FC = () => {
                                   <span className="text-[9px] font-bold uppercase truncate max-w-[120px]">{settings.noticePdfName}</span>
                                 </div>
                               ) : (
-                                <span className="text-[9px] font-bold text-slate-600 uppercase mb-2">Notice pending</span>
+                                <span className="text-[9px] font-bold text-slate-600 uppercase mb-2">No active broadcast</span>
                               )}
                               <label className="cursor-pointer bg-slate-800/50 hover:bg-slate-700 text-[8px] font-black uppercase tracking-widest text-slate-400 px-3 py-1.5 rounded-lg border border-slate-700 w-fit transition-all">
-                                Broadcast Info
+                                Upload Notice
                                 <input type="file" accept=".pdf" className="hidden" onChange={(e) => handleNoticeUpload(club.id, e.target.files?.[0] || null)} />
                               </label>
                             </div>
@@ -146,7 +146,7 @@ const AdminPanel: React.FC = () => {
                                 : 'border-rose-500/20 text-rose-500 hover:bg-rose-500/10'
                               }`}
                             >
-                              {settings.isOpen ? 'Recruiting' : 'Closed'}
+                              {settings.isOpen ? 'Recruiting' : 'Paused'}
                             </button>
                           </td>
                         </tr>
@@ -160,15 +160,15 @@ const AdminPanel: React.FC = () => {
             {/* Sidebar Stats */}
             <div className="space-y-6">
               <div className="bg-gradient-to-br from-indigo-600 to-violet-700 p-8 rounded-[2.5rem] shadow-2xl">
-                <div className="text-white/60 text-[10px] font-black uppercase tracking-[0.2em] mb-2">Database Stats</div>
-                <div className="text-4xl font-black text-white mb-6">Real-Time</div>
+                <div className="text-white/60 text-[10px] font-black uppercase tracking-[0.2em] mb-2">Authority Overview</div>
+                <div className="text-4xl font-black text-white mb-6">Database</div>
                 <div className="space-y-4">
                   <div className="flex justify-between items-center py-3 border-b border-white/10">
-                    <span className="text-white/70 text-xs font-bold">Total Portals</span>
+                    <span className="text-white/70 text-xs font-bold">Total Hubs</span>
                     <span className="text-white font-black">{CLUBS.length}</span>
                   </div>
                   <div className="flex justify-between items-center py-3">
-                    <span className="text-white/70 text-xs font-bold">New Submissions</span>
+                    <span className="text-white/70 text-xs font-bold">Pending Review</span>
                     <span className="text-white font-black">{apps.filter(a => a.status === 'pending').length}</span>
                   </div>
                 </div>
@@ -201,22 +201,22 @@ const AdminPanel: React.FC = () => {
                     
                     <div className="space-y-3 mb-8">
                        <div className="flex items-center justify-between text-[10px]">
-                         <span className="text-slate-500 font-bold uppercase">Club</span>
+                         <span className="text-slate-500 font-bold uppercase">Applied to</span>
                          <span className="text-white font-black">{app.clubName}</span>
                        </div>
                        <div className="flex items-center justify-between text-[10px]">
-                         <span className="text-slate-500 font-bold uppercase">Resume</span>
+                         <span className="text-slate-500 font-bold uppercase">Resume Link</span>
                          <span className={app.resumeName ? 'text-emerald-400 font-black' : 'text-slate-700 font-black'}>
-                           {app.resumeName ? 'Available' : 'None'}
+                           {app.resumeName ? 'Ready for Review' : 'Missing CV'}
                          </span>
                        </div>
                     </div>
 
                     <button 
                       onClick={() => setViewingApp(app)}
-                      className="w-full py-3 bg-indigo-600 hover:bg-indigo-500 text-white text-[9px] font-black uppercase tracking-[0.2em] rounded-xl transition-all shadow-lg"
+                      className="w-full py-3 bg-indigo-600 hover:bg-indigo-500 text-white text-[9px] font-black uppercase tracking-[0.2em] rounded-xl transition-all shadow-lg active:scale-95"
                     >
-                      Review Profile
+                      Review Application
                     </button>
                   </div>
                 ))
@@ -225,10 +225,10 @@ const AdminPanel: React.FC = () => {
           </div>
         )}
 
-        {/* Detailed Application Modal with Resume Viewer */}
+        {/* Detailed Application Modal with Resume Hub */}
         {viewingApp && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-slate-950/95 backdrop-blur-xl">
-            <div className="max-w-3xl w-full bg-slate-900 border border-white/10 rounded-[3rem] p-10 shadow-2xl relative overflow-hidden">
+            <div className="max-w-4xl w-full bg-slate-900 border border-white/10 rounded-[3rem] p-10 shadow-2xl relative overflow-hidden">
               <button 
                 onClick={() => setViewingApp(null)}
                 className="absolute top-8 right-8 text-slate-500 hover:text-white"
@@ -237,7 +237,7 @@ const AdminPanel: React.FC = () => {
               </button>
 
               <div className="mb-10">
-                <div className="text-[10px] font-black text-indigo-400 uppercase tracking-[0.3em] mb-2">Detailed Submission</div>
+                <div className="text-[10px] font-black text-indigo-400 uppercase tracking-[0.3em] mb-2">Recruitment Hub: Profile Review</div>
                 <h3 className="text-4xl font-black text-white tracking-tight">{viewingApp.fullName}</h3>
                 <div className="flex space-x-4 mt-2">
                    <span className="text-slate-500 font-bold uppercase text-[10px]">{viewingApp.enrollmentNo}</span>
@@ -249,7 +249,7 @@ const AdminPanel: React.FC = () => {
                 <div className="space-y-8">
                   <div>
                     <h5 className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-4 border-b border-slate-800 pb-2">Statement of Purpose</h5>
-                    <p className="text-slate-300 text-sm font-medium leading-relaxed italic italic-quote bg-slate-950/50 p-6 rounded-2xl border border-white/5 h-48 overflow-y-auto">
+                    <p className="text-slate-300 text-sm font-medium leading-relaxed italic italic-quote bg-slate-950/50 p-6 rounded-2xl border border-white/5 h-64 overflow-y-auto">
                       "{viewingApp.sop}"
                     </p>
                   </div>
@@ -257,24 +257,24 @@ const AdminPanel: React.FC = () => {
 
                 <div className="space-y-8">
                   <div>
-                    <h5 className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-4 border-b border-slate-800 pb-2">Candidate Resume</h5>
+                    <h5 className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-4 border-b border-slate-800 pb-2">Resume Document</h5>
                     {viewingApp.resumeName ? (
-                      <div className="p-6 bg-slate-950/50 rounded-2xl border border-white/5 flex flex-col items-center justify-center space-y-4">
-                        <svg className="w-12 h-12 text-emerald-400" fill="currentColor" viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                      <div className="p-10 bg-slate-950/50 rounded-2xl border border-white/5 flex flex-col items-center justify-center space-y-4">
+                        <svg className="w-16 h-16 text-emerald-400" fill="currentColor" viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
                         <div className="text-center">
                           <p className="text-[10px] font-black text-white uppercase truncate max-w-[200px]">{viewingApp.resumeName}</p>
-                          <p className="text-[8px] font-bold text-slate-600 uppercase">PDF Document</p>
+                          <p className="text-[8px] font-bold text-slate-600 uppercase">PDF Document Attachment</p>
                         </div>
                         <button 
                           onClick={() => setViewingResume(viewingApp.resumeName || null)}
-                          className="w-full py-3 bg-emerald-600/10 hover:bg-emerald-600 text-emerald-500 hover:text-white text-[9px] font-black uppercase tracking-widest rounded-xl transition-all"
+                          className="w-full py-4 bg-emerald-600 text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all shadow-xl shadow-emerald-600/20 active:scale-95"
                         >
                           View Official Resume
                         </button>
                       </div>
                     ) : (
                       <div className="p-12 bg-slate-950/20 rounded-2xl border border-dashed border-slate-800 text-center">
-                        <p className="text-[9px] font-black text-slate-700 uppercase">No Resume Provided</p>
+                        <p className="text-[9px] font-black text-slate-700 uppercase">Candidate did not attach CV</p>
                       </div>
                     )}
                   </div>
@@ -286,23 +286,23 @@ const AdminPanel: React.FC = () => {
                   onClick={() => updateAppStatus(viewingApp.id, 'accepted')}
                   className="flex-1 py-4 bg-emerald-600 text-white text-xs font-black uppercase tracking-widest rounded-2xl transition-all shadow-xl shadow-emerald-600/20 active:scale-95"
                 >
-                  Confirm Acceptance
+                  Accept Candidate
                 </button>
                 <button 
                   onClick={() => updateAppStatus(viewingApp.id, 'rejected')}
                   className="flex-1 py-4 bg-rose-600 text-white text-xs font-black uppercase tracking-widest rounded-2xl transition-all shadow-xl shadow-rose-600/20 active:scale-95"
                 >
-                  Reject Application
+                  Decline Application
                 </button>
               </div>
             </div>
           </div>
         )}
 
-        {/* Resume Viewer Mock Modal */}
+        {/* High-Fidelity Resume Modal */}
         {viewingResume && (
-          <div className="fixed inset-0 z-[110] flex items-center justify-center p-6 bg-black/90 backdrop-blur-md">
-            <div className="max-w-4xl w-full h-[80vh] bg-slate-100 rounded-[2rem] flex flex-col overflow-hidden relative">
+          <div className="fixed inset-0 z-[110] flex items-center justify-center p-6 bg-black/95 backdrop-blur-lg">
+            <div className="max-w-4xl w-full h-[85vh] bg-slate-100 rounded-[3rem] flex flex-col overflow-hidden relative shadow-2xl">
                <button 
                 onClick={() => setViewingResume(null)}
                 className="absolute top-6 right-6 bg-slate-200 text-slate-900 p-2 rounded-full hover:bg-slate-300 transition-all z-10"
@@ -310,8 +310,8 @@ const AdminPanel: React.FC = () => {
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M6 18L18 6M6 6l12 12" /></svg>
               </button>
               
-              <div className="p-4 border-b bg-slate-200 flex justify-between items-center">
-                 <span className="text-[10px] font-black uppercase text-slate-600">Resume Preview: {viewingResume}</span>
+              <div className="p-6 border-b bg-slate-200 flex justify-between items-center">
+                 <span className="text-[10px] font-black uppercase text-slate-600">Document Transmission: {viewingResume}</span>
                  <div className="flex space-x-2">
                     <div className="w-3 h-3 bg-red-400 rounded-full"></div>
                     <div className="w-3 h-3 bg-yellow-400 rounded-full"></div>
@@ -319,36 +319,36 @@ const AdminPanel: React.FC = () => {
                  </div>
               </div>
 
-              <div className="flex-grow p-12 overflow-y-auto">
-                 {/* Simulated Resume Content */}
-                 <div className="max-w-2xl mx-auto bg-white p-12 shadow-sm border border-slate-200 text-slate-900 font-serif">
-                    <h1 className="text-3xl font-bold mb-1 border-b-2 border-slate-900 pb-1">{viewingApp?.fullName}</h1>
-                    <div className="text-sm mb-8 flex justify-between italic">
+              <div className="flex-grow p-12 overflow-y-auto bg-slate-50">
+                 {/* Render a professional CV layout */}
+                 <div className="max-w-2xl mx-auto bg-white p-16 shadow-2xl border border-slate-200 text-slate-900 font-serif min-h-screen">
+                    <h1 className="text-4xl font-bold mb-1 border-b-4 border-slate-900 pb-2">{viewingApp?.fullName}</h1>
+                    <div className="text-sm mb-12 flex justify-between italic text-slate-500">
                        <span>{viewingApp?.enrollmentNo}</span>
-                       <span>NITA Student Portfolio</span>
+                       <span>NIT Agartala Student Profile</span>
                     </div>
 
-                    <section className="mb-6">
-                       <h2 className="text-xs font-bold uppercase tracking-widest bg-slate-100 px-2 py-1 mb-3">Professional Summary</h2>
-                       <p className="text-xs leading-relaxed text-slate-700">Highly motivated engineering student at National Institute of Technology, Agartala with a keen interest in club activities and collaborative environments. Proficient in problem solving and technical implementation.</p>
+                    <section className="mb-10">
+                       <h2 className="text-xs font-black uppercase tracking-widest bg-slate-100 px-3 py-1.5 mb-5 inline-block">Professional Summary</h2>
+                       <p className="text-sm leading-relaxed text-slate-700">Dedicated engineering undergraduate from the {viewingApp?.branch} Department at National Institute of Technology, Agartala. Aiming to apply technical skills and leadership qualities to contribute effectively to the {viewingApp?.clubName} community.</p>
                     </section>
 
-                    <section className="mb-6">
-                       <h2 className="text-xs font-bold uppercase tracking-widest bg-slate-100 px-2 py-1 mb-3">Statement of Purpose (Original)</h2>
-                       <p className="text-xs leading-relaxed text-slate-700 italic border-l-2 border-indigo-200 pl-4">"{viewingApp?.sop}"</p>
+                    <section className="mb-10">
+                       <h2 className="text-xs font-black uppercase tracking-widest bg-slate-100 px-3 py-1.5 mb-5 inline-block">Motivation & Vision</h2>
+                       <p className="text-sm leading-relaxed text-slate-700 italic border-l-4 border-indigo-500 pl-6 py-2 bg-indigo-50/20">"{viewingApp?.sop}"</p>
                     </section>
 
-                    <section className="mb-6">
-                       <h2 className="text-xs font-bold uppercase tracking-widest bg-slate-100 px-2 py-1 mb-3">Education</h2>
-                       <div className="flex justify-between text-xs font-bold">
-                          <span>B.Tech in {viewingApp?.branch} Department</span>
-                          <span>2022 - Present</span>
+                    <section className="mb-10">
+                       <h2 className="text-xs font-black uppercase tracking-widest bg-slate-100 px-3 py-1.5 mb-5 inline-block">Education</h2>
+                       <div className="flex justify-between text-sm font-bold">
+                          <span>Bachelor of Technology ({viewingApp?.branch})</span>
+                          <span>2022 - 2026</span>
                        </div>
-                       <p className="text-xs text-slate-600">NIT Agartala, India</p>
+                       <p className="text-sm text-slate-600">NIT Agartala, Jirania, Tripura</p>
                     </section>
 
-                    <div className="mt-20 text-[10px] text-slate-400 text-center border-t pt-4">
-                       End of System-Generated Resume Preview
+                    <div className="mt-24 text-[10px] text-slate-300 text-center border-t pt-6 uppercase tracking-widest">
+                       End of Recruitment Document Hub Preview
                     </div>
                  </div>
               </div>

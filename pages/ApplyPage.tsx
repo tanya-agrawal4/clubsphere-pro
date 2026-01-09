@@ -70,16 +70,16 @@ const ApplyPage: React.FC<ApplyPageProps> = ({ club, userEnrollment, onSuccess, 
 
   if (!settings.isOpen) {
     return (
-      <div className="min-h-screen pt-40 px-6 flex flex-col items-center">
+      <div className="min-h-screen pt-40 px-6 flex flex-col items-center bg-[#020617]">
         <div className="bg-red-500/10 border border-red-500/20 p-12 rounded-[2.5rem] max-w-xl w-full text-center backdrop-blur-xl shadow-2xl">
           <div className="w-20 h-20 bg-red-500/20 rounded-3xl flex items-center justify-center mx-auto mb-8 border border-red-500/30">
             <svg className="w-10 h-10 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 15v2m0-8v6m-5.121-1.121l10.242 0a2 2 0 001.414-3.414l-5.121-5.121a2 2 0 00-2.828 0l-5.121 5.121a2 2 0 00-2.828 0l-5.121 5.121a2 2 0 001.414 3.414z" />
             </svg>
           </div>
-          <h2 className="text-3xl font-black text-white mb-4">Recruitment Paused</h2>
+          <h2 className="text-3xl font-black text-white mb-4">Recruitment Closed</h2>
           <p className="text-slate-400 font-medium leading-relaxed mb-10 italic">
-            Unfortunately, {club.name} has temporarily closed applications. Check back later for the next cycle.
+            Applications for {club.name} are currently paused. Please stay tuned for the next cycle.
           </p>
           <button onClick={onBack} className="px-10 py-4 bg-slate-800 hover:bg-slate-700 text-white rounded-2xl text-xs font-black uppercase tracking-widest border border-slate-700 transition-all">
             Return to Dashboard
@@ -91,9 +91,9 @@ const ApplyPage: React.FC<ApplyPageProps> = ({ club, userEnrollment, onSuccess, 
 
   return (
     <div className="min-h-screen pt-32 pb-32 px-6 lg:px-12 flex flex-col items-center bg-[#020617]">
-      <div className="max-w-5xl w-full grid grid-cols-1 lg:grid-cols-3 gap-12">
+      <div className="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-3 gap-12">
         
-        {/* Left Column: Club Info */}
+        {/* Left Column: Detailed Club Portfolio */}
         <div className="lg:col-span-1 space-y-8">
           <div className="bg-slate-900/40 border border-white/5 p-8 rounded-[2.5rem] backdrop-blur-xl">
             <div className="w-24 h-24 bg-white/5 p-5 rounded-3xl border border-white/10 flex items-center justify-center mb-8">
@@ -106,7 +106,7 @@ const ApplyPage: React.FC<ApplyPageProps> = ({ club, userEnrollment, onSuccess, 
             <div className="space-y-6">
                <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-500 border-b border-slate-800 pb-2">About the Club</h4>
                <p className="text-slate-400 text-sm leading-relaxed font-medium">
-                 {club.longDescription || club.shortDescription}
+                 {club.longDescription}
                </p>
                <a 
                  href={club.instagram} 
@@ -119,49 +119,45 @@ const ApplyPage: React.FC<ApplyPageProps> = ({ club, userEnrollment, onSuccess, 
             </div>
           </div>
 
-          {/* Official Notice Modal-Like Card */}
+          {/* Official Broadacst Notice */}
           {settings.noticePdfName && (
-            <div className="bg-indigo-600/10 border-2 border-indigo-500/30 p-8 rounded-[2.5rem] relative overflow-hidden group hover:border-indigo-500 transition-all">
-               <div className="absolute top-0 right-0 p-4 opacity-20">
-                 <svg className="w-16 h-16" fill="currentColor" viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
-               </div>
+            <div className="bg-indigo-600/10 border-2 border-indigo-500/30 p-8 rounded-[2.5rem] relative overflow-hidden shadow-2xl">
                <div className="relative z-10">
-                 <h4 className="text-sm font-black text-white uppercase tracking-widest mb-2 flex items-center space-x-2">
+                 <h4 className="text-sm font-black text-white uppercase tracking-widest mb-3 flex items-center space-x-2">
                    <span className="flex h-2 w-2 rounded-full bg-indigo-400 animate-pulse"></span>
-                   <span>Official Notice</span>
+                   <span>Important Notice</span>
                  </h4>
-                 <p className="text-[10px] font-bold text-slate-500 uppercase mb-6">Foundational details for recruits</p>
-                 <div className="text-xs text-indigo-300 font-bold mb-8 leading-relaxed">
-                   The admin has uploaded <span className="text-white">"{settings.noticePdfName}"</span>. Please review this document before finalizing your application.
-                 </div>
+                 <p className="text-xs text-indigo-300 font-bold mb-6 leading-relaxed">
+                   The admin has uploaded <span className="text-white">"{settings.noticePdfName}"</span>. Please review this before finalizing your application.
+                 </p>
                  <button 
-                   onClick={() => alert(`Opening notice: ${settings.noticePdfName}\n\n[In a real app, this would open a browser PDF viewer tab]`)}
-                   className="w-full py-3.5 bg-indigo-600 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-2xl shadow-xl shadow-indigo-600/30 hover:bg-indigo-500 transition-all active:scale-95"
+                   onClick={() => alert(`Reviewing: ${settings.noticePdfName}`)}
+                   className="w-full py-4 bg-indigo-600 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-2xl shadow-xl shadow-indigo-600/30 hover:bg-indigo-500 transition-all active:scale-95"
                  >
-                   View Official PDF
+                   Open Official PDF
                  </button>
                </div>
             </div>
           )}
         </div>
 
-        {/* Right Column: Form */}
+        {/* Right Column: Application Form */}
         <div className="lg:col-span-2">
           {alreadyApplied ? (
             <div className="bg-slate-900/40 border border-emerald-500/20 p-12 rounded-[3rem] text-center backdrop-blur-xl h-full flex flex-col items-center justify-center">
-              <div className="w-20 h-20 bg-emerald-500/10 rounded-full flex items-center justify-center mb-8 border border-emerald-500/30">
-                <svg className="w-10 h-10 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" /></svg>
+              <div className="w-20 h-20 bg-emerald-500/10 rounded-full flex items-center justify-center mb-8 border border-emerald-500/30 text-emerald-400">
+                <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" /></svg>
               </div>
-              <h3 className="text-3xl font-black text-white mb-4 tracking-tight">Application Filed</h3>
-              <p className="text-slate-400 font-medium max-w-sm mb-10">Your submission for {club.name} is successfully stored. The recruitment cell will contact you via email if shortlisted.</p>
-              <button onClick={onBack} className="px-10 py-4 bg-slate-800 hover:bg-slate-700 text-white rounded-2xl text-xs font-black uppercase tracking-widest border border-slate-700 transition-all">
+              <h3 className="text-3xl font-black text-white mb-4 tracking-tight">Application Logged</h3>
+              <p className="text-slate-400 font-medium mb-10">You've successfully applied to {club.name}. The recruitment cell will review your profile shortly.</p>
+              <button onClick={onBack} className="px-10 py-4 bg-slate-800 text-white rounded-2xl text-xs font-black uppercase tracking-widest transition-all">
                 Return to Dashboard
               </button>
             </div>
           ) : (
             <div className="bg-slate-900/30 border border-white/5 p-8 md:p-12 rounded-[3rem] backdrop-blur-2xl shadow-2xl">
               <div className="mb-12">
-                <h3 className="text-2xl font-black text-white mb-2">Member Onboarding</h3>
+                <h3 className="text-2xl font-black text-white mb-2">Member Onboarding: {club.name}</h3>
                 <p className="text-slate-500 text-sm font-medium">Step 01: Profile Submission</p>
               </div>
 
@@ -179,7 +175,7 @@ const ApplyPage: React.FC<ApplyPageProps> = ({ club, userEnrollment, onSuccess, 
                     />
                   </div>
                   <div>
-                    <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 mb-3 px-1">Enrollment ID</label>
+                    <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 mb-3 px-1">Enrollment (ReadOnly)</label>
                     <input 
                       type="text" 
                       disabled
@@ -207,15 +203,15 @@ const ApplyPage: React.FC<ApplyPageProps> = ({ club, userEnrollment, onSuccess, 
                   <textarea 
                     required
                     rows={6}
-                    placeholder="Why do you want to join? How will you help the club reach its goals?"
-                    className="w-full px-6 py-4 bg-slate-950/50 border border-slate-800 rounded-2xl text-white font-bold focus:outline-none focus:border-indigo-500/50 transition-all placeholder-slate-700 resize-none"
+                    placeholder="Why are you a good fit for this club? Mention your skills and motivation."
+                    className="w-full px-6 py-4 bg-slate-950/50 border border-slate-800 rounded-2xl text-white font-bold focus:outline-none focus:border-indigo-500/50 transition-all resize-none"
                     value={formData.sop}
                     onChange={(e) => setFormData({...formData, sop: e.target.value})}
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 mb-3 px-1">Candidate CV/Resume (PDF)</label>
+                  <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 mb-3 px-1">Candidate CV (PDF)</label>
                   <div className="relative group">
                     <input 
                       type="file" 
@@ -226,22 +222,22 @@ const ApplyPage: React.FC<ApplyPageProps> = ({ club, userEnrollment, onSuccess, 
                     <div className="w-full px-6 py-10 border-2 border-dashed border-slate-800 group-hover:border-indigo-500/50 rounded-2xl text-center transition-all bg-slate-950/20 flex flex-col items-center">
                       <svg className="w-8 h-8 text-slate-600 mb-4 group-hover:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" /></svg>
                       <span className="text-slate-500 font-bold text-sm">
-                        {resume ? resume.name : 'Select or drag your professional resume'}
+                        {resume ? resume.name : 'Drag & Drop your Professional CV'}
                       </span>
                     </div>
                   </div>
                 </div>
 
-                {error && <p className="text-red-400 text-xs font-black text-center uppercase tracking-widest">{error}</p>}
+                {error && <p className="text-red-400 text-xs font-black text-center">{error}</p>}
 
                 <button 
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-6 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 text-white text-xs font-black uppercase tracking-[0.3em] rounded-3xl transition-all shadow-2xl shadow-indigo-600/30 flex items-center justify-center space-x-4 active:scale-95"
+                  className="w-full py-6 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 text-white text-xs font-black uppercase tracking-[0.3em] rounded-3xl transition-all shadow-2xl active:scale-95 flex items-center justify-center space-x-4"
                 >
-                  {isSubmitting ? 'Processing Application...' : (
+                  {isSubmitting ? 'Submitting Application...' : (
                     <>
-                      <span>Submit Application</span>
+                      <span>Submit Profile</span>
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
                     </>
                   )}

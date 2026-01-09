@@ -17,7 +17,7 @@ export interface Club {
   name: string;
   category: ClubCategory;
   shortDescription: string;
-  longDescription: string; // Detailed description added
+  longDescription: string;
   image: string;
   instagram: string;
   applyLink: string;
